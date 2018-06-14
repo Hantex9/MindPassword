@@ -35,20 +35,14 @@ class RegisterPasswordViewController: UIViewController {
   
   @objc fileprivate func keyboardWillShow(notification: NSNotification) {
     if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-      if scrollView.frame.origin.y <= 0 {
-        scrollView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
-        scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
-//        scrollView.frame.origin.y -= keyboardSize.height
-      }
+      scrollView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
+      scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
     }
   }
   
   @objc fileprivate func keyboardWillHide(notification: NSNotification) {
-    if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-        scrollView.contentInset = UIEdgeInsets.zero
-        scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
-//        scrollView.frame.origin.y += keyboardSize.height
-    }
+    scrollView.contentInset = UIEdgeInsets.zero
+    scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
   }
   
   // MARK: Actions
@@ -56,11 +50,11 @@ class RegisterPasswordViewController: UIViewController {
     view.endEditing(true)
   }
   
-  @IBAction func setPasswordButtonPressed(_ sender: UIButton) {
+  @IBAction func setPasswordButtonPressed(_ sender: SubmitButton) {
     
     view.endEditing(true)
     
-    let errorMessages = DataManager.shared.isValidPassword(password: passwordTextField.text, confirmPassword: confirmPasswordTextField.text)
+    let errorMessages = AuthManager.shared.isValidPassword(password: passwordTextField.text, confirmPassword: confirmPasswordTextField.text)
     
     if !errorMessages.passwordError.isEmpty {
       passwordTextField.showErrorMessage(message: errorMessages.passwordError)

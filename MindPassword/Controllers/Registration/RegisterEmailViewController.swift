@@ -12,6 +12,8 @@ class RegisterEmailViewController: UIViewController {
   
   @IBOutlet weak var emailTextField: CredentialsTextField!
   
+  fileprivate let authManager = AuthManager.shared
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -36,15 +38,30 @@ class RegisterEmailViewController: UIViewController {
     view.endEditing(true)
   }
   
-  @IBAction func createButtonPressed(_ sender: UIButton) {
+  @IBAction func createButtonPressed(_ sender: SubmitButton) {
     
-    if let errorMessage = DataManager.shared.isValidEmail(email: emailTextField.text) {
+    guard let email = emailTextField.text else { return }
+    
+    sender.isFetchingData = true
+    
+    if let errorMessage = authManager.isValidEmail(email: email) {
       emailTextField.showErrorMessage(message: errorMessage)
+      sender.isFetchingData = false
     } else {
-      emailTextField.dismissErrorMessage()
-      let storyboard = UIStoryboard(name: "Register", bundle: nil)
-      let vc = storyboard.instantiateViewController(withIdentifier: "PasswordView")
-      navigationController?.pushViewController(vc, animated: true)
+     
+      authManager.validate(email: email) { (isValid, errorMessage) in
+        
+        if let errorMessage = errorMessage, !isValid {
+          sender.isFetchingData = false
+          self.emailTextField.showErrorMessage(message: errorMessage)
+        } else {
+          self.emailTextField.dismissErrorMessage()
+          sender.isFetchingData = false
+          let storyboard = UIStoryboard(name: "Register", bundle: nil)
+          let vc = storyboard.instantiateViewController(withIdentifier: "PasswordView")
+          self.navigationController?.pushViewController(vc, animated: true)
+        }
+      }
     }
   }
   
