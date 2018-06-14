@@ -20,10 +20,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XAw-GV-fI8" customClass="CredentialsView" customModule="MindPassword" customModuleProvider="target">
-                                <rect key="frame" x="34" y="258" width="307" height="100"/>
+                                <rect key="frame" x="34" y="235" width="307" height="123"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Net-eL-g8V" customClass="PasswordTextField" customModule="MindPassword" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="307" height="50"/>
+                                        <rect key="frame" x="0.0" y="73" width="307" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="swU-2j-3cr"/>
                                         </constraints>
@@ -32,7 +32,7 @@
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="54v-L3-vUW" customClass="CredentialsTextField" customModule="MindPassword" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="307" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="307" height="73"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" textContentType="email"/>
@@ -106,7 +106,7 @@
                             <constraint firstItem="XAw-GV-fI8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="LMB-uu-1xd"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="XAw-GV-fI8" secondAttribute="trailing" constant="34" id="RoF-dW-mf5"/>
                             <constraint firstItem="dIg-Z9-4G9" firstAttribute="top" secondItem="XAw-GV-fI8" secondAttribute="bottom" constant="23" id="brj-aJ-3U2"/>
-                            <constraint firstItem="XAw-GV-fI8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="238" id="fC4-eU-cS0"/>
+                            <constraint firstItem="XAw-GV-fI8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="215" id="fC4-eU-cS0"/>
                             <constraint firstItem="dIg-Z9-4G9" firstAttribute="leading" secondItem="XAw-GV-fI8" secondAttribute="leading" constant="20" id="flp-jp-XK3"/>
                             <constraint firstItem="XAw-GV-fI8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="34" id="oYH-3g-I0O"/>
                             <constraint firstItem="dIg-Z9-4G9" firstAttribute="trailing" secondItem="XAw-GV-fI8" secondAttribute="trailing" constant="-20" id="sua-O7-XkO"/>

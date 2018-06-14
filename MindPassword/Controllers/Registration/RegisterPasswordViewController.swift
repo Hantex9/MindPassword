@@ -10,16 +10,8 @@ import UIKit
 
 class RegisterPasswordViewController: UIViewController {
   
-  @IBOutlet weak var passwordTextField: PasswordTextField! {
-    didSet {
-      passwordTextField.delegate = passwordTextField
-    }
-  }
-  @IBOutlet weak var confirmPasswordTextField: PasswordTextField! {
-    didSet {
-      confirmPasswordTextField.delegate = confirmPasswordTextField
-    }
-  }
+  @IBOutlet weak var passwordTextField: PasswordTextField!
+  @IBOutlet weak var confirmPasswordTextField: PasswordTextField!
   
   override func viewDidLoad() {
     super.viewDidLoad()

@@ -26,9 +26,6 @@ class PasswordTextField: CredentialsTextField {
     super.init(coder: aDecoder)
   }
   
-}
-
-extension PasswordTextField: UITextFieldDelegate {
   func textFieldShouldClear(_ textField: UITextField) -> Bool {
     self.isSecureTextEntry = !self.isSecureTextEntry
     return false
@@ -41,4 +38,6 @@ extension PasswordTextField: UITextFieldDelegate {
     let newPosition = CGPoint(x: actualRect.origin.x - (newSize.width - actualRect.size.width) - rightPadding, y: actualRect.origin.y - (newSize.height - actualRect.size.height))
     return CGRect(origin: newPosition, size: newSize)
   }
+  
 }
+
