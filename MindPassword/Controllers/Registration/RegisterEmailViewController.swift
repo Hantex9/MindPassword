@@ -8,7 +8,10 @@
 
 import UIKit
 
-class RegisterMainViewController: UIViewController {
+class RegisterEmailViewController: UIViewController {
+  
+  @IBOutlet weak var emailTextField: CredentialsTextField!
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -34,9 +37,15 @@ class RegisterMainViewController: UIViewController {
   }
   
   @IBAction func createButtonPressed(_ sender: UIButton) {
-    let storyboard = UIStoryboard(name: "Register", bundle: nil)
-    let vc = storyboard.instantiateViewController(withIdentifier: "PasswordView")
-    navigationController?.pushViewController(vc, animated: true)
+    
+    if let errorMessage = DataManager.shared.isValidEmail(email: emailTextField.text) {
+      emailTextField.showErrorMessage(message: errorMessage)
+    } else {
+      emailTextField.dismissErrorMessage()
+      let storyboard = UIStoryboard(name: "Register", bundle: nil)
+      let vc = storyboard.instantiateViewController(withIdentifier: "PasswordView")
+      navigationController?.pushViewController(vc, animated: true)
+    }
   }
   
   @IBAction func signInButtonPressed(_ sender: UIButton) {

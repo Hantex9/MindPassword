@@ -12,6 +12,7 @@ class RegisterPasswordViewController: UIViewController {
   
   @IBOutlet weak var passwordTextField: PasswordTextField!
   @IBOutlet weak var confirmPasswordTextField: PasswordTextField!
+  @IBOutlet weak var confirmTopConstraint: NSLayoutConstraint!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -33,9 +34,33 @@ class RegisterPasswordViewController: UIViewController {
   }
   
   @IBAction func setPasswordButtonPressed(_ sender: UIButton) {
-    let storyboard = UIStoryboard(name: "Register", bundle: nil)
-    let vc = storyboard.instantiateViewController(withIdentifier: "FingerView")
-    navigationController?.pushViewController(vc, animated: true)
+    
+    let errorMessages = DataManager.shared.isValidPassword(password: passwordTextField.text, confirmPassword: confirmPasswordTextField.text)
+    
+    if !errorMessages.passwordError.isEmpty {
+      passwordTextField.showErrorMessage(message: errorMessages.passwordError)
+      if errorMessages.confirmPasswordError.isEmpty {
+        confirmPasswordTextField.dismissErrorMessage()
+      }
+    }
+    
+    if !errorMessages.confirmPasswordError.isEmpty {
+      confirmPasswordTextField.showErrorMessage(message: errorMessages.confirmPasswordError)
+      if errorMessages.passwordError.isEmpty {
+        passwordTextField.dismissErrorMessage()
+      }
+    }
+    
+    
+    confirmTopConstraint.constant = (passwordTextField.errorMessageLabel.text!.isEmpty) ? 15.0 : passwordTextField.errorMessageLabel.frame.size.height + 15.0
+    confirmTopConstraint.constant = (passwordTextField.errorMessageLabel.text!.isEmpty) ? 15.0 : passwordTextField.errorMessageLabel.frame.size.height + 15.0
+
+    
+    if errorMessages.confirmPasswordError.isEmpty && errorMessages.passwordError.isEmpty {
+      let storyboard = UIStoryboard(name: "Register", bundle: nil)
+      let vc = storyboard.instantiateViewController(withIdentifier: "FingerView")
+      navigationController?.pushViewController(vc, animated: true)
+    }
   }
   
 }

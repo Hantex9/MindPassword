@@ -32,7 +32,10 @@
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="54v-L3-vUW" customClass="CredentialsTextField" customModule="MindPassword" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="307" height="73"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="307" height="65"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="65" id="ANJ-Dd-zDW"/>
+                                        </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" textContentType="email"/>
@@ -46,7 +49,6 @@
                                     <constraint firstItem="54v-L3-vUW" firstAttribute="top" secondItem="XAw-GV-fI8" secondAttribute="top" id="bJW-2I-2An"/>
                                     <constraint firstItem="Net-eL-g8V" firstAttribute="leading" secondItem="XAw-GV-fI8" secondAttribute="leading" id="bUO-6S-jHc"/>
                                     <constraint firstItem="54v-L3-vUW" firstAttribute="leading" secondItem="XAw-GV-fI8" secondAttribute="leading" id="ngb-Tj-2HM"/>
-                                    <constraint firstItem="Net-eL-g8V" firstAttribute="top" secondItem="54v-L3-vUW" secondAttribute="bottom" id="zWQ-0e-agP"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="emailTextField" destination="54v-L3-vUW" id="Bxm-FR-GCp"/>

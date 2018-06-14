@@ -13,7 +13,7 @@ class CredentialsView: UIView {
   @IBOutlet weak var emailTextField: CredentialsTextField!
   @IBOutlet weak var passwordTextField: PasswordTextField! {
     didSet {
-      passwordTextField.delegate = passwordTextField
+      passwordTextField.hideBottomBorder()
     }
   }
   
