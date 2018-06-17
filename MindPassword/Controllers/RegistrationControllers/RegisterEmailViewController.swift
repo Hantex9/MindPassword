@@ -58,7 +58,8 @@ class RegisterEmailViewController: UIViewController {
           self.emailTextField.dismissErrorMessage()
           sender.isFetchingData = false
           let storyboard = UIStoryboard(name: "Register", bundle: nil)
-          let vc = storyboard.instantiateViewController(withIdentifier: "PasswordView")
+          let vc = storyboard.instantiateViewController(withIdentifier: "PasswordView") as! RegisterPasswordViewController
+          vc.userEmail = email
           self.navigationController?.pushViewController(vc, animated: true)
         }
       }
@@ -70,3 +71,4 @@ class RegisterEmailViewController: UIViewController {
   }
   
 }
+

@@ -18,6 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     
     FirebaseApp.configure()
+    
+    let statusBar = application.value(forKey: "statusBar") as? UIView
+    statusBar?.backgroundColor = UIColor(red: 222/255, green: 76/255, blue: 40/255, alpha: 1.0)
+    
     return true
   }
 

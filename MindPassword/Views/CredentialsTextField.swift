@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CredentialsTextFieldDelegate: UITextFieldDelegate {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool
+}
+
 class CredentialsTextField: UITextField {
   
   private let placeholderLabel: UILabel = {
@@ -25,8 +29,15 @@ class CredentialsTextField: UITextField {
   
   private let bottomBorder = CALayer()
   
-  fileprivate let padding = UIEdgeInsets(top: 0, left: 10, bottom: -10, right: 5);
+  fileprivate let padding = UIEdgeInsets(top: 0, left: 10, bottom: -10, right: 5)
   fileprivate var placeholderText: String?
+  
+  var borderColor: UIColor = .gray {
+    didSet {
+      self.bottomBorder.backgroundColor = borderColor.cgColor
+    }
+  }
+  
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -146,5 +157,10 @@ extension CredentialsTextField: UITextFieldDelegate {
         self.placeholderText = self.placeholder
       }
     }
+  }
+  
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {    
+    endEditing(true)
+    return true
   }
 }

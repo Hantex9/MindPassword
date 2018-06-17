@@ -12,6 +12,8 @@ class DataManager {
   
   public static let shared = DataManager()
   
+  var folder: String?
+  
   private init() {
     
   }

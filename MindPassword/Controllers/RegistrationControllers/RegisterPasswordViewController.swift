@@ -15,6 +15,10 @@ class RegisterPasswordViewController: UIViewController {
   @IBOutlet weak var confirmPasswordTextField: PasswordTextField!
   @IBOutlet weak var confirmTopConstraint: NSLayoutConstraint!
   
+  fileprivate let authManager = AuthManager.shared
+  
+  var userEmail: String = ""
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -53,8 +57,11 @@ class RegisterPasswordViewController: UIViewController {
   @IBAction func setPasswordButtonPressed(_ sender: SubmitButton) {
     
     view.endEditing(true)
+    sender.isFetchingData = true
+  
+    let password = passwordTextField.text
     
-    let errorMessages = AuthManager.shared.isValidPassword(password: passwordTextField.text, confirmPassword: confirmPasswordTextField.text)
+    let errorMessages = authManager.isValidPassword(password: password, confirmPassword: confirmPasswordTextField.text)
     
     if !errorMessages.passwordError.isEmpty {
       passwordTextField.showErrorMessage(message: errorMessages.passwordError)
@@ -70,16 +77,26 @@ class RegisterPasswordViewController: UIViewController {
       }
     }
     
-    
     if let error = passwordTextField.errorMessageLabel.text {
       confirmTopConstraint.constant = (error.isEmpty) ? 38.0 : passwordTextField.errorMessageLabel.frame.size.height + 38.0
     }
 
-    
     if errorMessages.confirmPasswordError.isEmpty && errorMessages.passwordError.isEmpty {
-      let storyboard = UIStoryboard(name: "Register", bundle: nil)
-      let vc = storyboard.instantiateViewController(withIdentifier: "FingerView")
-      navigationController?.pushViewController(vc, animated: true)
+      
+      authManager.registerUser(email: userEmail, password: password!) { (error) in
+        
+        sender.isFetchingData = false
+        
+        guard error == nil else {
+          return self.showAlert(message: NSLocalizedString("Something went wrong, retry later.", comment: "passwordDBErrorMessage"))
+        }
+        
+        let storyboard = UIStoryboard(name: "Register", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "FingerView")
+        self.navigationController?.pushViewController(vc, animated: true)
+      }
+    } else {
+      sender.isFetchingData = false
     }
   }
   
