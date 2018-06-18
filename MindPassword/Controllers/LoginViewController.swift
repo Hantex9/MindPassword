@@ -59,20 +59,20 @@ class LoginViewController: UIViewController {
       sender.isFetchingData = false
       showAlert(message: errors)
     } else {
-//      authManager.loginUser(email: email!, password: password!) { (errorMessage) in
+      authManager.loginUser(email: email!, password: password!) { (errorMessage) in
       
         sender.isFetchingData = false
         
-        /*guard errorMessage == nil else {
+        guard errorMessage == nil else {
           self.showAlert(message: errorMessage!)
           return
-        }*/
-        
+        }
+
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "HomeView")
         self.present(vc, animated: false, completion: nil)
         
-//      }
+      }
     }
   }
   

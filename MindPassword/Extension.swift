@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import Foundation
 
 extension UIViewController {
   
-  func showAlert(message: String) {
-    let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+  func showAlert(message: String, title: String = NSLocalizedString("Error", comment: "errorAlertMessage")) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
     
     //    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
     alert.addAction(UIAlertAction(title: NSLocalizedString("Close", comment: "closeAlert"), style: .cancel, handler: nil))
@@ -19,7 +20,12 @@ extension UIViewController {
     self.present(alert, animated: true)
   }
   
-  func showPopup(message: String) {
+  func copyInClipboard(text: String) {
+    let pasteBoard = UIPasteboard.general
+    pasteBoard.string = text
+  }
+  
+  func showPopup(message: String, distanceFromBottom: CGFloat = 80.0) {
     
     let kVCTagPopupView = 100
     self.view.subviews.forEach {
@@ -52,7 +58,7 @@ extension UIViewController {
     self.view.addSubview(view)
     
     NSLayoutConstraint.activate([
-      view.topAnchor.constraint(equalTo: self.view.topAnchor, constant: self.view.frame.height - (label.frame.size.height - 20.0) - 80.0), //Da modificare
+      view.topAnchor.constraint(equalTo: self.view.topAnchor, constant: self.view.frame.height - (label.frame.size.height - 20.0) - distanceFromBottom), //Da modificare
       view.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
       view.widthAnchor.constraint(equalToConstant: label.frame.size.width + 15.0),
       view.heightAnchor.constraint(equalToConstant: label.frame.size.height + 15.0),

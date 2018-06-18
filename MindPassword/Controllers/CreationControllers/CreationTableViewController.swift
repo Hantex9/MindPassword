@@ -24,6 +24,8 @@ class CreationTableViewController: UITableViewController {
   @IBOutlet weak var urlTextField: CredentialsTextField! {
     didSet {
       urlTextField.borderColor = UIColor.clear
+      urlTextField.text = "http://"
+      urlTextField.textFieldDidBeginEditing(folderTextField)
     }
   }
   @IBOutlet weak var usernameTextField: CredentialsTextField! {
@@ -37,9 +39,17 @@ class CreationTableViewController: UITableViewController {
     }
   }
   
+  fileprivate let user = DataManager.shared.user
+  fileprivate let dataManager = DataManager.shared
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    //Tap Gesture to close the keyboard
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapHandler))
+    tapGesture.cancelsTouchesInView = false
+    view.addGestureRecognizer(tapGesture)
     
     //Notification for the Keyboard
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -50,11 +60,7 @@ class CreationTableViewController: UITableViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    if let folderName = DataManager.shared.folder {
-      folderTextField.text = folderName
-    } else {
-      folderTextField.text = ""
-    }
+    folderTextField.text = dataManager.selectedFolder
     
   }
   
@@ -76,15 +82,31 @@ class CreationTableViewController: UITableViewController {
   @IBAction func closeButtonPressed(_ sender: UIBarButtonItem) {
     self.dismiss(animated: true, completion: nil)
   }
+  
+  @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+    guard let name = nameTextField.text else { return }
+    guard !name.isEmpty else {
+      self.showAlert(message: NSLocalizedString("Please supply a name", comment: "noNameInsertedError"), title: "MindPassword")
+      return
+    }
+    
+    let folder = (folderTextField.text!.isEmpty) ? "(none)" : folderTextField.text!
+    let url = (urlTextField.text!.isEmpty) ? nil : urlTextField.text
+    let email = (usernameTextField.text!.isEmpty) ? nil : usernameTextField.text
+    let password = (passwordTextField.text!.isEmpty) ? nil : passwordTextField.text
+    
+    DataManager.shared.createSite(user: DataManager.shared.user!, name: name, folder: folder, url: url, email: email, password: password) { (site) in
+      print(site)
+    }
+    
+    self.dismiss(animated: true, completion: nil)
+    
+  }
+  
+  
+  @objc func tapHandler() {
+    view.endEditing(true)
+  }
 
 }
-
-
-//func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-//  let newLength = count(textField.text.utf16) + count(string.utf16) - range.length
-//  mylabel.text =  String(newLength)
-//
-//  return newLength <= 25 // To just allow up to 25 characters
-//  return true
-//}
 

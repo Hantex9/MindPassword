@@ -13,6 +13,8 @@ class AuthManager {
   
   public static let shared = AuthManager()
   
+  private let dataManager = DataManager.shared
+  
   private init() {
     
   }
@@ -38,7 +40,9 @@ class AuthManager {
         }
         return
       }
-      
+      if let result = result {
+        self.dataManager.user = User(uuid: result.user.uid, email: result.user.email!, sites: [])
+      }
       completion(nil)
     }
   }

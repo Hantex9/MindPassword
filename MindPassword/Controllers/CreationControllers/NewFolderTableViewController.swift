@@ -34,7 +34,7 @@ class NewFolderTableViewController: UITableViewController {
   }
   
   private func createFolder(named name: String) {
-    DataManager.shared.folder = name
+    DataManager.shared.selectedFolder = name
     navigationController?.popToRootViewController(animated: true)
   }
  

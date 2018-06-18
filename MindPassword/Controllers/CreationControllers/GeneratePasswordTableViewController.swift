@@ -60,7 +60,8 @@ class GeneratePasswordTableViewController: UITableViewController {
     let row = indexPath.row
     if row == 2 {
       tableView.cellForRow(at: indexPath)?.isSelected = false
-      self.showPopup(message: NSLocalizedString("Copied value to the clipboard\n\n\(generatedPassword)", comment: "messageCopiedPopup"))
+      self.copyInClipboard(text: generatedPassword)
+      self.showPopup(message: NSLocalizedString("Copied value to the clipboard\n\n", comment: "messageCopiedPopup") + generatedPassword)
     }
   }
   

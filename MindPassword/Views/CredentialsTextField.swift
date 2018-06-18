@@ -163,4 +163,11 @@ extension CredentialsTextField: UITextFieldDelegate {
     endEditing(true)
     return true
   }
+  
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    let newLength = textField.text!.utf16.count + string.utf16.count - range.length
+  
+    return newLength <= 64 // To just allow up to 64 characters
+  }
+
 }

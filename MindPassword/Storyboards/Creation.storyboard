@@ -14,7 +14,7 @@
         <scene sceneID="GKv-V3-glU">
             <objects>
                 <tableViewController id="wqX-eW-rqH" customClass="CreationTableViewController" customModule="MindPassword" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="tSR-ia-YOv">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="tSR-ia-YOv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -151,6 +151,9 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Save" id="Sjz-Ff-gj1">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="saveButtonPressed:" destination="wqX-eW-rqH" id="ePx-vW-cg9"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -322,6 +325,7 @@
                                 <constraint firstItem="Sn2-TK-STr" firstAttribute="leading" secondItem="lLt-mY-snt" secondAttribute="leading" constant="20" id="83P-Hh-Xw9"/>
                                 <constraint firstItem="Sn2-TK-STr" firstAttribute="top" secondItem="lLt-mY-snt" secondAttribute="top" constant="30" id="BmD-ZL-GFb"/>
                                 <constraint firstAttribute="bottom" secondItem="Sn2-TK-STr" secondAttribute="bottom" constant="30" id="JmD-hz-hr6"/>
+                                <constraint firstItem="Sn2-TK-STr" firstAttribute="centerX" secondItem="lLt-mY-snt" secondAttribute="centerX" id="Pqs-hh-UMB"/>
                                 <constraint firstAttribute="trailing" secondItem="Sn2-TK-STr" secondAttribute="trailing" constant="20" id="gtW-3q-Hxv"/>
                             </constraints>
                         </view>

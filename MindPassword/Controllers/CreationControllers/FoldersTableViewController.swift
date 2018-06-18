@@ -10,8 +10,19 @@ import UIKit
 
 class FoldersTableViewController: UITableViewController {
   
+  fileprivate let dataManager = DataManager.shared
+  
+  fileprivate var folders = [String]()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    print("FOLDERS DID LOAD")
+    
+    if let sites = dataManager.user?.sites {
+      print(sites)
+      folders = Array(Set(sites.map({ return $0.folder })))
+    }
   }
   
   // MARK: - Table view data source
@@ -21,24 +32,31 @@ class FoldersTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//    return (section == 0) ? 1 : DataManager.shared.user.folders.count
-    return (section == 0) ? 1 : 4
+    return (section == 0) ? 1 : ((folders.count == 0) ? 1 : folders.count)
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let reuseIdentifier = (indexPath.section == 0) ? "newFolderCell" : "folderCell"
     let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
     
-//    cell.textLabel = DataManager.shared.user.folders[indexPath.row]
-    
-//    if DataManager.shared.user.folders[indexPath.row] == DataManager.shared.user.selectedFolder {
-//      cell.accessoryType = .checkmark
-//    }
-    
-    if DataManager.shared.folder == cell.textLabel!.text {
-      cell.accessoryType = .checkmark
+    if indexPath.section != 0 {
+      
+      guard folders.count != 0 else {
+        cell.textLabel?.text = "(none)"
+        cell.accessoryType = .checkmark
+        return cell
+      }
+      
+      let index = indexPath.row
+      
+      cell.textLabel?.text = folders[index]
+      
+      if folders[index] == dataManager.selectedFolder {
+        cell.accessoryType = .checkmark
+      }
+
     }
-    
+
     return cell
   }
   
@@ -48,8 +66,7 @@ class FoldersTableViewController: UITableViewController {
       let vc = storyboard.instantiateViewController(withIdentifier: "CreateFolderView")
       navigationController?.pushViewController(vc, animated: true)
     } else {
-//      DataManager.shared.user.selectedFolder = DataManager.shared.user.folders[indexPath.row]
-      DataManager.shared.folder = tableView.cellForRow(at: indexPath)?.textLabel!.text!
+      dataManager.selectedFolder = (folders.count > 0) ? folders[indexPath.row] : "(none)"
       navigationController?.popToRootViewController(animated: true)
     }
   }
