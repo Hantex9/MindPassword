@@ -14,7 +14,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="MindPassword" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginView" id="BYZ-38-t0r" customClass="LoginViewController" customModule="MindPassword" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -122,6 +122,8 @@
                         <outlet property="emailTextField" destination="54v-L3-vUW" id="AFh-PV-1X9"/>
                         <outlet property="loginButton" destination="dIg-Z9-4G9" id="nes-fM-ptk"/>
                         <outlet property="passwordTextField" destination="Net-eL-g8V" id="p2Y-Ix-cOL"/>
+                        <outlet property="switchEmail" destination="wjy-Ix-peS" id="S4S-VT-gNH"/>
+                        <outlet property="switchPassword" destination="sUZ-3m-WOG" id="de9-50-gWD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -37,6 +37,10 @@ class HomeViewController: UIViewController {
         self.foldersSites[key] = []
       }
       
+      self.imagesSite.forEach({ (key: String, _) in
+        self.imagesSite[key] = []
+      })
+      
       self.dataManager.user.sites?.forEach({
         if self.foldersSites[$0.folder] == nil {
           self.foldersSites[$0.folder] = []
@@ -116,6 +120,18 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     guard let folder = foldersSites[folders[section]] else { return 0 }
     return (!folder.isEmpty) ? folder.count : 0
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    guard let localSites = foldersSites[folders[indexPath.section]] else { return }
+    let site = localSites[indexPath.row]
+    let storyboard = UIStoryboard(name: "Home", bundle: nil)
+    let vc = storyboard.instantiateViewController(withIdentifier: "OptionsView") as! OptionsViewController
+    vc.site = site
+    vc.modalPresentationStyle = .overCurrentContext
+    vc.modalTransitionStyle = .crossDissolve
+    vc.rootViewController = self
+    tabBarController?.present(vc, animated: true)
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

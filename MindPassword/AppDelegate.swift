@@ -15,9 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
-    let statusBar = application.value(forKey: "statusBar") as? UIView
-    statusBar?.backgroundColor = UIColor(red: 222/255, green: 76/255, blue: 40/255, alpha: 1.0)
     
     return true
   }
@@ -25,6 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func applicationWillResignActive(_ application: UIApplication) {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    
+    let view = UIView(frame: self.window!.bounds)
+    view.tag = 1001
+    view.backgroundColor = .red
+    
+    UIApplication.shared.keyWindow?.subviews.last?.addSubview(view)
   }
 
   func applicationDidEnterBackground(_ application: UIApplication) {
@@ -38,6 +41,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func applicationDidBecomeActive(_ application: UIApplication) {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    if let view = UIApplication.shared.keyWindow?.subviews.last?.viewWithTag(1001) {
+      view.removeFromSuperview()
+      let storyboard = UIStoryboard(name: "Identification", bundle: nil)
+      let vc = storyboard.instantiateViewController(withIdentifier: "IdentificationView")
+      getTopViewController().present(vc, animated: false, completion: nil)
+    }
   }
 
   func applicationWillTerminate(_ application: UIApplication) {

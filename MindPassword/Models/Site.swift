@@ -11,15 +11,17 @@ import FirebaseFirestore
 
 struct Site {
   let uuid: String!
+  let createdBy: String!
   var name: String!
   var folder: String!
   var url: String?
   var email: String?
   var password: String?
   
-  init(uuid: String, name: String, folder: String, url: String?, email: String?, password: String?) {
+  init(uuid: String, createdBy: String, name: String, folder: String, url: String?, email: String?, password: String?) {
     self.uuid = uuid
     self.name = name
+    self.createdBy = createdBy
     self.folder = folder
     self.url = url
     self.email = email
@@ -32,6 +34,7 @@ struct Site {
     
     guard
       let name = value["name"] as? String,
+      let createdBy = value["createdBy"] as? String,
       let folder = value["folder"] as? String else {
         return nil
     }
@@ -41,6 +44,7 @@ struct Site {
     let password = value["password"] as? String
     
     self.uuid = uuid
+    self.createdBy = createdBy
     self.name = name
     self.folder = folder
     self.url = url
@@ -50,7 +54,7 @@ struct Site {
   
   func toDictionary() -> [String: Any?] {
     return [
-      "uuid": uuid,
+      "createdBy": createdBy,
       "name": name,
       "folder": folder,
       "url": url,

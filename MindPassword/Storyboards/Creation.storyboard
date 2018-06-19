@@ -322,11 +322,10 @@
                             </subviews>
                             <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstItem="Sn2-TK-STr" firstAttribute="leading" secondItem="lLt-mY-snt" secondAttribute="leading" constant="20" id="83P-Hh-Xw9"/>
-                                <constraint firstItem="Sn2-TK-STr" firstAttribute="top" secondItem="lLt-mY-snt" secondAttribute="top" constant="30" id="BmD-ZL-GFb"/>
-                                <constraint firstAttribute="bottom" secondItem="Sn2-TK-STr" secondAttribute="bottom" constant="30" id="JmD-hz-hr6"/>
-                                <constraint firstItem="Sn2-TK-STr" firstAttribute="centerX" secondItem="lLt-mY-snt" secondAttribute="centerX" id="Pqs-hh-UMB"/>
+                                <constraint firstItem="Sn2-TK-STr" firstAttribute="top" secondItem="lLt-mY-snt" secondAttribute="top" constant="30" id="7Qz-WX-Cvv"/>
+                                <constraint firstItem="Sn2-TK-STr" firstAttribute="leading" secondItem="lLt-mY-snt" secondAttribute="leading" constant="20" id="gDF-oj-nOn"/>
                                 <constraint firstAttribute="trailing" secondItem="Sn2-TK-STr" secondAttribute="trailing" constant="20" id="gtW-3q-Hxv"/>
+                                <constraint firstAttribute="bottom" secondItem="Sn2-TK-STr" secondAttribute="bottom" constant="30" id="yCs-Z5-0yy"/>
                             </constraints>
                         </view>
                         <sections>

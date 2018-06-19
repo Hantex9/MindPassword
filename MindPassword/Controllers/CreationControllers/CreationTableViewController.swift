@@ -13,34 +13,50 @@ class CreationTableViewController: UITableViewController {
   @IBOutlet weak var nameTextField: CredentialsTextField! {
     didSet {
       nameTextField.borderColor = UIColor.clear
+      nameTextField.text = editingSite?.name
+      if let _ = editingSite?.name {
+        nameTextField.textFieldDidBeginEditing(nameTextField)
+      }
     }
   }
   @IBOutlet weak var folderTextField: CredentialsTextField! {
     didSet {
       folderTextField.borderColor = UIColor.clear
+      folderTextField.text = editingSite?.folder
+      if let folder = editingSite?.folder {
+        dataManager.selectedFolder = folder
+      }
       folderTextField.textFieldDidBeginEditing(folderTextField)
     }
   }
   @IBOutlet weak var urlTextField: CredentialsTextField! {
     didSet {
       urlTextField.borderColor = UIColor.clear
-      urlTextField.text = "http://"
+      urlTextField.text = (editingSite != nil) ? editingSite?.url : "http://"
       urlTextField.textFieldDidBeginEditing(folderTextField)
     }
   }
   @IBOutlet weak var usernameTextField: CredentialsTextField! {
     didSet {
       usernameTextField.borderColor = UIColor.clear
+      usernameTextField.text = editingSite?.email
+      if let _ = editingSite?.email {
+        usernameTextField.textFieldDidBeginEditing(usernameTextField)
+      }
     }
   }
   @IBOutlet weak var passwordTextField: PasswordTextField! {
     didSet {
       passwordTextField.borderColor = UIColor.clear
+      passwordTextField.text = editingSite?.password
+      if let _ = editingSite?.password {
+        passwordTextField.textFieldDidBeginEditing(passwordTextField)
+      }
     }
   }
   
-  fileprivate let user = DataManager.shared.user
   fileprivate let dataManager = DataManager.shared
+  var editingSite: Site?
   
   
   override func viewDidLoad() {
@@ -95,8 +111,14 @@ class CreationTableViewController: UITableViewController {
     let email = (usernameTextField.text!.isEmpty) ? nil : usernameTextField.text
     let password = (passwordTextField.text!.isEmpty) ? nil : passwordTextField.text
     
-    DataManager.shared.createSite(user: DataManager.shared.user!, name: name, folder: folder, url: url, email: email, password: password) { (site) in
-      print(site)
+    if let editingSite = editingSite {
+      dataManager.updateSite(site: editingSite, name: name, folder: folder, url: url, email: email, password: password) { (success) in
+        print((success) ? "tutto ok" : "something wrong")
+      }
+    } else {
+      dataManager.createSite(user: DataManager.shared.user!, name: name, folder: folder, url: url, email: email, password: password) { (site) in
+        print(site)
+      }
     }
     
     self.dismiss(animated: true, completion: nil)

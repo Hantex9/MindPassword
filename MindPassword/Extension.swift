@@ -14,7 +14,6 @@ extension UIViewController {
   func showAlert(message: String, title: String = NSLocalizedString("Error", comment: "errorAlertMessage")) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
     
-    //    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
     alert.addAction(UIAlertAction(title: NSLocalizedString("Close", comment: "closeAlert"), style: .cancel, handler: nil))
     
     self.present(alert, animated: true)
@@ -90,4 +89,22 @@ extension String {
       self += "\n" + other
     }
   }
+}
+
+func getTopViewController() -> UIViewController {
+  
+  var viewController = UIViewController()
+  
+  if let vc =  UIApplication.shared.delegate?.window??.rootViewController {
+    
+    viewController = vc
+    var presented = vc
+    
+    while let top = presented.presentedViewController {
+      presented = top
+      viewController = top
+    }
+  }
+  
+  return viewController
 }

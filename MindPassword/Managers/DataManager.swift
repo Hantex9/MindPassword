@@ -16,11 +16,36 @@ class DataManager {
   
   let db: Firestore!
   let siteRef: CollectionReference!
+  let userDefaults = UserDefaults.standard
+  
+  var rememberedEmail: String? {
+    get {
+      return userDefaults.string(forKey: "rememberedEmail")
+    }
+    set {
+      userDefaults.set(newValue, forKey: "rememberedEmail")
+      userDefaults.synchronize()
+    }
+  }
+  
+  var rememberedPassword: String? {
+    get {
+      return userDefaults.string(forKey: "rememberedPassword")
+    }
+    set {
+      userDefaults.set(newValue, forKey: "rememberedPassword")
+      userDefaults.synchronize()
+    }
+  }
   
   var user: User!
   var selectedFolder: String = "(none)"
   
   private init() {
+    
+    userDefaults.register(defaults: ["rememberedEmail": "",
+                                     "rememberedPassword": ""])
+    
     FirebaseApp.configure()
     db = Firestore.firestore()
     let settings = db.settings
@@ -60,10 +85,33 @@ class DataManager {
       guard err == nil else { return completion(nil) }
       
       print(ref.documentID)
-      let site = Site(uuid: ref.documentID, name: name, folder: folder, url: url, email: email, password: password)
+      let site = Site(uuid: ref.documentID, createdBy: user.uuid, name: name, folder: folder, url: url, email: email, password: password)
       completion(site)
     }
   }
   
+  func updateSite(site: Site, name: String, folder: String, url: String?, email: String?, password: String?, completion: @escaping (Bool) -> Void) {
+    let ref = siteRef.document(site.uuid)
+    ref.updateData([
+      "name": name,
+      "folder": folder,
+      "url": url,
+      "email": email,
+      "password": password
+    ]) { err in
+      guard err == nil else { return completion(false) }
+      
+      print(ref.documentID)
+      completion(true)
+    }
+  }
+  
+  func deleteSite(site: Site, completion: @escaping (Bool) -> Void) {
+    let ref = siteRef.document(site.uuid)
+    ref.delete { (error) in
+      guard error == nil else{ return completion(false) }
+      completion(true)
+    }
+  }
   
 }
