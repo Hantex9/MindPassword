@@ -237,10 +237,10 @@
             </objects>
             <point key="canvasLocation" x="960.79999999999995" y="111.99400299850076"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Registration Navigation Controller-->
         <scene sceneID="tPZ-cu-UOy">
             <objects>
-                <navigationController storyboardIdentifier="RegisterView" navigationBarHidden="YES" id="lMR-BH-NX5" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="RegisterView" navigationBarHidden="YES" id="lMR-BH-NX5" customClass="RegistrationNavigationController" customModule="MindPassword" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Rcl-Sw-lUZ">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -307,6 +307,9 @@
                                 <state key="normal" title="TURN ON TOUCH ID">
                                     <color key="titleColor" red="0.99683946371078491" green="0.99205619096755981" blue="0.99196141958236694" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="touchIDButtonPressed:" destination="8B2-ft-rct" eventType="touchUpInside" id="aKT-Ps-Dyb"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fingerprint" translatesAutoresizingMaskIntoConstraints="NO" id="we0-9u-JbM">
                                 <rect key="frame" x="127" y="258" width="120" height="150"/>

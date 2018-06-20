@@ -114,7 +114,10 @@ class LoginViewController: UIViewController {
         self.dataManager.rememberedPassword = (self.switchPassword.isOn) ? password : ""
 
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "HomeView")
+        let vc = storyboard.instantiateViewController(withIdentifier: "HomeView") as! UITabBarController
+        let navigationVC = vc.viewControllers![0] as! UINavigationController
+        let homeVC = navigationVC.viewControllers[0] as! HomeViewController
+        homeVC.hasLoggedIn = true
         self.present(vc, animated: false, completion: nil)
         
       }

@@ -34,25 +34,28 @@ class OptionsPasswordTableViewController: UITableViewController {
   }
   
   override func viewDidLoad() {
-    super.viewDidLoad()
-    
+    super.viewDidLoad()    
   }
   
   // MARK: Actions
   @IBAction func capitalLettersSwitchSetted(_ sender: UISwitch) {
     passwordGenerator.useCapitalLetters = sender.isOn
+    UISelectionFeedbackGenerator().selectionChanged()
   }
   
   @IBAction func normalLettersSwitchSetted(_ sender: UISwitch) {
     passwordGenerator.useLetters = sender.isOn
+    UISelectionFeedbackGenerator().selectionChanged()
   }
   
   @IBAction func specialCharsSwitchSetted(_ sender: UISwitch) {
     passwordGenerator.useSpecialCharacters = sender.isOn
+    UISelectionFeedbackGenerator().selectionChanged()
   }
   
   @IBAction func numbersSwitchSetted(_ sender: UISwitch) {
     passwordGenerator.useNumbers = sender.isOn
+    UISelectionFeedbackGenerator().selectionChanged()
   }
   
 }

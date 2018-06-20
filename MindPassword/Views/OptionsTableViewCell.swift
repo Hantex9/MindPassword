@@ -10,6 +10,7 @@ import UIKit
 
 class OptionsTableViewCell: UITableViewCell {
 
+  @IBOutlet weak var trailingConstraint: NSLayoutConstraint!
   @IBOutlet weak var iconImageView: UIImageView!
   @IBOutlet weak var optionLabel: UILabel!
   

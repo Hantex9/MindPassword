@@ -44,9 +44,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     if let view = UIApplication.shared.keyWindow?.subviews.last?.viewWithTag(1001) {
       view.removeFromSuperview()
-      let storyboard = UIStoryboard(name: "Identification", bundle: nil)
-      let vc = storyboard.instantiateViewController(withIdentifier: "IdentificationView")
-      getTopViewController().present(vc, animated: false, completion: nil)
+      let topViewController = getTopViewController()
+      print(topViewController)
+      guard !(topViewController is LoginViewController) && !(topViewController is IdentificationPasswordViewController) && !(topViewController is RegistrationNavigationController) else { return }
+      
+      if let identificationVC = topViewController as? IdentificationViewController {
+        
+        if !identificationVC.isPresentingTouchID {
+          identificationVC.showTouchID()
+        }
+      } else {
+        let storyboard = UIStoryboard(name: "Identification", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "IdentificationView") as! IdentificationViewController
+        topViewController.present(vc, animated: false, completion: nil)
+
+        vc.showTouchID()
+      }
     }
   }
 

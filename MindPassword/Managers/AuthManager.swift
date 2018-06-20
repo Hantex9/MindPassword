@@ -58,6 +58,16 @@ class AuthManager {
     
   }
   
+  func validate(password: String, email: String, completion: @escaping (String?) -> Void) {
+    Auth.auth().signIn(withEmail: email, password: password) { (_, error) in
+      guard error == nil else {
+        completion(NSLocalizedString("Invalid password, retry!", comment: ""))
+        return
+      }
+      completion(nil)
+    }
+  }
+  
   
   func validate(email: String, completion: @escaping (Bool, String?) -> Void) {
     

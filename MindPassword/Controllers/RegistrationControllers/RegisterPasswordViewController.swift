@@ -91,6 +91,8 @@ class RegisterPasswordViewController: UIViewController {
           return self.showAlert(message: NSLocalizedString("Something went wrong, retry later.", comment: "passwordDBErrorMessage"))
         }
         
+        DataManager.shared.isNewUser = true
+        
         let storyboard = UIStoryboard(name: "Register", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "FingerView")
         self.navigationController?.pushViewController(vc, animated: true)

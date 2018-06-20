@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import LocalAuthentication
 
 class DataManager {
   
@@ -17,6 +18,8 @@ class DataManager {
   let db: Firestore!
   let siteRef: CollectionReference!
   let userDefaults = UserDefaults.standard
+  
+  var isNewUser: Bool = false
   
   var rememberedEmail: String? {
     get {
@@ -38,13 +41,24 @@ class DataManager {
     }
   }
   
+  var isTouchIDEnabled: Bool? {
+    get {
+      return userDefaults.bool(forKey: "isTouchIDEnabled")
+    }
+    set {
+      userDefaults.set(newValue, forKey: "isTouchIDEnabled")
+      userDefaults.synchronize()
+    }
+  }
+  
   var user: User!
   var selectedFolder: String = "(none)"
   
   private init() {
     
     userDefaults.register(defaults: ["rememberedEmail": "",
-                                     "rememberedPassword": ""])
+                                     "rememberedPassword": "",
+                                     "isTouchIDEnabled": false])
     
     FirebaseApp.configure()
     db = Firestore.firestore()

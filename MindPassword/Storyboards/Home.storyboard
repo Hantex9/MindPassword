@@ -155,6 +155,7 @@
                                         <connections>
                                             <outlet property="iconImageView" destination="zhp-zD-3hi" id="90C-Ko-xpx"/>
                                             <outlet property="optionLabel" destination="mwG-1q-mhO" id="Qq1-Fv-0F4"/>
+                                            <outlet property="trailingConstraint" destination="viO-Jo-eX1" id="PRZ-9G-UHd"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -217,14 +218,42 @@
                         <sections>
                             <tableViewSection id="eeP-az-LUY">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="pHH-ug-UPg" style="IBUITableViewCellStyleDefault" id="BY0-K9-gwL">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="BY0-K9-gwL">
                                         <rect key="frame" x="0.0" y="35" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BY0-K9-gwL" id="CVO-oA-WNQ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Log Out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pHH-ug-UPg">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="0Jc-8E-dab">
+                                                    <rect key="frame" x="16" y="12" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" text="Security" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9j-jQ-ip6">
+                                                    <rect key="frame" x="44" y="0.0" width="69" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="z7j-Wp-fQK" kind="show" id="gZ0-2w-k4j"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="Njk-pj-g8f">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="ehW-2w-sbx" style="IBUITableViewCellStyleDefault" id="DSC-Ee-c7Z">
+                                        <rect key="frame" x="0.0" y="115" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DSC-Ee-c7Z" id="FoW-We-Dkj">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Log Out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ehW-2w-sbx">
                                                     <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -247,7 +276,15 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FrH-Ay-oKJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1665" y="626"/>
+            <point key="canvasLocation" x="1664.8" y="625.63718140929541"/>
+        </scene>
+        <!--SecurityView-->
+        <scene sceneID="d9w-aZ-fuz">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Security" referencedIdentifier="SecurityView" id="z7j-Wp-fQK" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vGp-bs-Zoa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2374" y="625"/>
         </scene>
         <!--Vault-->
         <scene sceneID="6pP-Zz-pmY">
@@ -298,5 +335,6 @@
     </scenes>
     <resources>
         <image name="copy" width="101" height="101"/>
+        <image name="lock" width="100" height="126"/>
     </resources>
 </document>

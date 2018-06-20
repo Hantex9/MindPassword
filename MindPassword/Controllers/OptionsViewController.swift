@@ -20,9 +20,11 @@ class OptionsViewController: UIViewController, UITableViewDataSource, UITableVie
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    tableView.dataSource = self
-    tableView.delegate = self
+
+    DispatchQueue.main.async {
+      self.tableView.dataSource = self
+      self.tableView.delegate = self
+    }
     
     view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
     
@@ -37,11 +39,8 @@ class OptionsViewController: UIViewController, UITableViewDataSource, UITableVie
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    
     self.tableView.backgroundColor = .white
-  }
-  
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
   }
   
   @objc func tapHandler(_ sender: UITapGestureRecognizer) {
@@ -69,7 +68,7 @@ class OptionsViewController: UIViewController, UITableViewDataSource, UITableVie
   }
   
   fileprivate func dismissAnimation(completion: @escaping () -> Void) {
-    UIView.animate(withDuration: 0.2, animations: {
+    UIView.animate(withDuration: 0.1, animations: {
       self.tableView.frame.origin.y = UIScreen.main.bounds.height
       self.view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
     }) { _ in
@@ -94,11 +93,10 @@ class OptionsViewController: UIViewController, UITableViewDataSource, UITableVie
     let cell = tableView.dequeueReusableCell(withIdentifier: "optionCell", for: indexPath) as! OptionsTableViewCell
     
     if indexPath.row == 0 {
+      cell.trailingConstraint.constant = 0
       cell.optionLabel.text = site.name
       cell.optionLabel.textAlignment = .center
-      cell.optionLabel.sizeToFit()
-//      cell.optionLabel.center = cell.center
-      cell.optionLabel.center.x = cell.frame.width - cell.optionLabel.frame.width
+      cell.layoutSubviews()
       cell.isUserInteractionEnabled = false
       return cell
     }
@@ -106,10 +104,10 @@ class OptionsViewController: UIViewController, UITableViewDataSource, UITableVie
     cell.optionLabel.text = options[indexPath.row - 1].text
     cell.iconImageView.image = options[indexPath.row - 1].image
     
-    if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 && isFirstView {
+    if indexPath.row == options.count && isFirstView {
       isFirstView = false
       self.tableView.frame.origin.y = UIScreen.main.bounds.height + 20.0
-      UIView.animate(withDuration: 0.2) {
+      UIView.animate(withDuration: 0.1) {
         self.tableView.frame.origin.y = self.tableView.frame.size.height - self.tableView.contentSize.height - 10.0
         self.tableView.frame.size.height = self.tableView.contentSize.height + 10.0
       }

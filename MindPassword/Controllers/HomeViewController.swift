@@ -17,6 +17,8 @@ class HomeViewController: UIViewController {
   fileprivate var foldersSites: [String: [Site]] = [:]
   fileprivate var imagesSite: [String: [UIImage]] = [:]
   
+  var hasLoggedIn: Bool = false
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -24,6 +26,16 @@ class HomeViewController: UIViewController {
     tableView.dataSource = self
     
     self.setObservers()
+    
+    let topViewController = getTopViewController()
+    if !hasLoggedIn && !dataManager.isNewUser && !(topViewController is IdentificationViewController) && !(topViewController is IdentificationPasswordViewController) {
+      let storyboard = UIStoryboard(name: "Identification", bundle: nil)
+      let vc = storyboard.instantiateViewController(withIdentifier: "IdentificationView") as! IdentificationViewController
+      topViewController.present(vc, animated: false, completion: nil)
+      vc.showTouchID()
+    }
+    
+    dataManager.isNewUser = false
   }
   
   fileprivate func setObservers() {
@@ -52,13 +64,10 @@ class HomeViewController: UIViewController {
         self.imagesSite[$0.folder]!.append(self.createPreviewImage(from: $0.name))
       })
       
-      
-      
       DispatchQueue.main.async {
         self.tableView.reloadData()
       }
     }
-    
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -127,6 +136,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     let site = localSites[indexPath.row]
     let storyboard = UIStoryboard(name: "Home", bundle: nil)
     let vc = storyboard.instantiateViewController(withIdentifier: "OptionsView") as! OptionsViewController
+
     vc.site = site
     vc.modalPresentationStyle = .overCurrentContext
     vc.modalTransitionStyle = .crossDissolve

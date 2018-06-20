@@ -19,6 +19,16 @@ extension UIViewController {
     self.present(alert, animated: true)
   }
   
+  func showAlert(message: String, title: String = NSLocalizedString("Error", comment: "errorAlertMessage"), handler: @escaping () -> Void) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    
+    alert.addAction(UIAlertAction(title: NSLocalizedString("Close", comment: "closeAlert"), style: .cancel) { _ in 
+      handler()
+    })
+    
+    self.present(alert, animated: true)
+  }
+  
   func copyInClipboard(text: String) {
     let pasteBoard = UIPasteboard.general
     pasteBoard.string = text
@@ -78,6 +88,47 @@ extension UIViewController {
       })
     }
     
+  }
+  
+  func showTouchID() {
+    if let identificationVC = self as? IdentificationViewController {
+      identificationVC.isPresentingTouchID = true
+    }
+    
+    if let touchIDEnabled = DataManager.shared.isTouchIDEnabled, touchIDEnabled {
+      let biometricAuth = BiometricAuth()
+      biometricAuth.authenticateUser { (error) in
+        
+        guard error == nil else {
+
+          if error == NSLocalizedString("Face ID/Touch ID is not available.", comment: "") || error == NSLocalizedString("Touch ID not available", comment: "")/* || error == NSLocalizedString("There was a problem verifying your identity.", comment: "") */{
+            
+            print("shows textfield with password")
+            let storyboard = UIStoryboard(name: "Identification", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "PasswordIdentification")
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
+              self.present(vc, animated: false, completion: nil)
+            })
+            
+          }
+          return
+        }
+        
+        if let identificationVC = self as? IdentificationViewController {
+          identificationVC.isPresentingTouchID = false
+        }
+        print("should dismiss")
+        self.dismiss(animated: false, completion: nil)
+      }
+    } else {
+      let storyboard = UIStoryboard(name: "Identification", bundle: nil)
+      let vc = storyboard.instantiateViewController(withIdentifier: "PasswordIdentification")
+      
+      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2, execute: {
+        self.present(vc, animated: false, completion: nil)
+      })
+    }
   }
 }
 

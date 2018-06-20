@@ -143,6 +143,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Site" id="cZt-61-uii">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="gnj-cA-uyU">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
                         <barButtonItem key="leftBarButtonItem" title="Close" id="L4H-P8-Zlj">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -548,6 +551,11 @@
                             <outlet property="delegate" destination="Oks-qM-CFq" id="N4X-GK-zGv"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Title" id="7jp-7P-MLW">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="qpe-sr-gaS">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="capitalLettersSwitch" destination="uKe-va-mkY" id="m8f-T8-yvg"/>
                         <outlet property="normalLettersSwitch" destination="03n-O3-S4N" id="vzQ-KS-nt1"/>

@@ -17,7 +17,7 @@ class SettingsTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    if indexPath.row == 0 {
+    if indexPath.row == 0 && indexPath.section == 1 {
       do {
         try Auth.auth().signOut()
         
@@ -25,6 +25,6 @@ class SettingsTableViewController: UITableViewController {
       } catch {
         print("Error during the logout")
       }
-    }
+    } 
   }
 }
