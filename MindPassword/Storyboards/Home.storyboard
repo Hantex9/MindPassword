@@ -290,7 +290,7 @@
         <scene sceneID="6pP-Zz-pmY">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eYu-Vt-2aN" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Vault" id="JtS-Mf-6eJ"/>
+                    <tabBarItem key="tabBarItem" title="Vault" image="vault" id="JtS-Mf-6eJ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="j4t-F9-wHY">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -313,7 +313,7 @@
         <scene sceneID="Q36-Yl-tjm">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4UE-Y6-DMd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" id="kC7-RI-lPt"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="kC7-RI-lPt"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Wc7-Vx-Bdu">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -336,5 +336,7 @@
     <resources>
         <image name="copy" width="101" height="101"/>
         <image name="lock" width="100" height="126"/>
+        <image name="settings" width="22" height="23"/>
+        <image name="vault" width="23" height="23"/>
     </resources>
 </document>
