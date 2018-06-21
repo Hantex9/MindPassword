@@ -46,6 +46,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSFaceIDUsageDescription</key>
-	<string>test</string>
+	<string>This app uses Face ID/Touch ID to secure your data from external uses</string>
 </dict>
 </plist>

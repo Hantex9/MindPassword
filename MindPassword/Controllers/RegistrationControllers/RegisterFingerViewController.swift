@@ -23,7 +23,7 @@ class RegisterFingerViewController: UIViewController {
   }
   @IBOutlet weak var turnOnButton: SubmitButton! {
     didSet {
-      let text = NSLocalizedString("TURN ON ", comment: "") + biometricTypeText
+      let text = NSLocalizedString("TURN ON ", comment: "") + biometricTypeText.uppercased()
       turnOnButton.setTitle(text, for: .normal)
     }
   }
