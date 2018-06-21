@@ -12,6 +12,7 @@ import FirebaseFirestore
 struct Site {
   let uuid: String!
   let createdBy: String!
+  var image: UIImage = UIImage() // Not stored in cloud
   var name: String!
   var folder: String!
   var url: String?

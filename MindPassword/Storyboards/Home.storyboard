@@ -88,8 +88,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="pVv-AW-xS2" secondAttribute="bottom" id="D2r-6v-aPa"/>
+                            <constraint firstItem="pVv-AW-xS2" firstAttribute="top" secondItem="2ba-7R-Obe" secondAttribute="top" id="PBw-ic-EgA"/>
                             <constraint firstItem="pVv-AW-xS2" firstAttribute="trailing" secondItem="2ba-7R-Obe" secondAttribute="trailing" id="Ye4-14-5zT"/>
-                            <constraint firstItem="pVv-AW-xS2" firstAttribute="top" secondItem="2ba-7R-Obe" secondAttribute="top" id="nzE-6Y-BmC"/>
                             <constraint firstItem="pVv-AW-xS2" firstAttribute="leading" secondItem="2ba-7R-Obe" secondAttribute="leading" id="p6p-jL-T5s"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2ba-7R-Obe"/>

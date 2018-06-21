@@ -10,6 +10,37 @@ import UIKit
 import LocalAuthentication
 
 class RegisterFingerViewController: UIViewController {
+  
+  @IBOutlet weak var titleLabel: UILabel! {
+    didSet {
+      titleLabel.text = NSLocalizedString("Unlock MinPassword with your ", comment: "") + biometricTextInput
+    }
+  }
+  @IBOutlet weak var descriptionLabel: UILabel! {
+    didSet {
+      descriptionLabel.text = NSLocalizedString("Use your \(biometricTextInput) to open your vault and keep your account safe.", comment: "")
+    }
+  }
+  @IBOutlet weak var turnOnButton: SubmitButton! {
+    didSet {
+      let text = NSLocalizedString("TURN ON ", comment: "") + biometricTypeText
+      turnOnButton.setTitle(text, for: .normal)
+    }
+  }
+  
+  
+  
+  fileprivate let biometricAuth = BiometricAuth()
+  fileprivate var biometricTextInput: String {
+    get {
+      return (biometricAuth.biometricType() == .faceID) ? NSLocalizedString("face", comment: "") : NSLocalizedString("fingerprint", comment: "")
+    }
+  }
+  fileprivate var biometricTypeText: String {
+    get {
+      return (biometricAuth.biometricType() == .faceID) ? "Face ID" : "Touch ID"
+    }
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -37,11 +68,11 @@ class RegisterFingerViewController: UIViewController {
       var message = ""
       var title = ""
       if let _ = errorMessage {
-        message = NSLocalizedString("Setting up Touch ID failed.\nYou can enable it later on the Settings tab.", comment: "noTouchDetected")
+        message = NSLocalizedString("Setting up \(self.biometricTypeText) failed.\nYou can enable it later on the Settings tab.", comment: "noTouchDetected")
         title = NSLocalizedString("Error", comment: "")
       } else {
         DataManager.shared.isTouchIDEnabled = true
-        message = NSLocalizedString("Touch ID Authentication succeed.", comment: "successTouchIDMessage")
+        message = NSLocalizedString("\(self.biometricTypeText) Authentication succeed.", comment: "successTouchIDMessage")
         title = NSLocalizedString("Success", comment: "success string in touch id register")
       }
       

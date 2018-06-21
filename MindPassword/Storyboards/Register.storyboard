@@ -320,6 +320,11 @@
                         <viewLayoutGuide key="safeArea" id="9Zo-aU-KjH"/>
                     </view>
                     <navigationItem key="navigationItem" id="BCZ-4R-6Ww"/>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="75O-Qt-0Ij" id="h9I-EE-5Il"/>
+                        <outlet property="titleLabel" destination="kbj-Cu-5GS" id="gBr-AG-cUh"/>
+                        <outlet property="turnOnButton" destination="3ah-XU-J2F" id="hbc-Jg-QFP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bh9-JN-Snl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

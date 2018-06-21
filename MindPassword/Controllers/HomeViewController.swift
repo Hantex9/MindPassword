@@ -12,10 +12,13 @@ class HomeViewController: UIViewController {
   
   @IBOutlet weak var tableView: UITableView!
   
+  let searchController = UISearchController(searchResultsController: nil)
+  
   fileprivate let dataManager = DataManager.shared
   fileprivate var folders = [String]()
   fileprivate var foldersSites: [String: [Site]] = [:]
-  fileprivate var imagesSite: [String: [UIImage]] = [:]
+  fileprivate var filteredSites: [String: [Site]] = [:]
+  fileprivate var filteredFolders: [String] = []
   
   var hasLoggedIn: Bool = false
   
@@ -24,6 +27,12 @@ class HomeViewController: UIViewController {
     
     tableView.delegate = self
     tableView.dataSource = self
+    
+    setupSearchBar()
+    
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapHandler))
+    tapGesture.cancelsTouchesInView = false
+    self.view.addGestureRecognizer(tapGesture)
     
     self.setObservers()
     
@@ -38,9 +47,64 @@ class HomeViewController: UIViewController {
     dataManager.isNewUser = false
   }
   
+  @objc func tapHandler() {
+    self.view.endEditing(true)
+  }
+  
+  fileprivate func setupSearchBar() {
+    
+    navigationItem.hidesSearchBarWhenScrolling = false
+    searchController.searchResultsUpdater = self
+    searchController.obscuresBackgroundDuringPresentation = false
+    searchController.searchBar.tintColor = .white
+    if let textfield = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+      textfield.textColor = UIColor.blue
+      if let backgroundview = textfield.subviews.first {
+        
+        backgroundview.backgroundColor = UIColor.white
+        
+        backgroundview.layer.cornerRadius = 10;
+        backgroundview.clipsToBounds = true;
+        
+      }
+    }
+    searchController.searchBar.placeholder = "Search Sites"
+    navigationItem.searchController = searchController
+  }
+  
+  fileprivate func isFiltering() -> Bool {
+    return searchController.isActive && !searchBarIsEmpty()
+  }
+  
+  fileprivate func searchBarIsEmpty() -> Bool {
+    return searchController.searchBar.text?.isEmpty ?? true
+  }
+  
+  fileprivate func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+    
+    let filteredSites = dataManager.user.sites?.filter({ (site) -> Bool in
+      return site.name.lowercased().contains(searchText.lowercased())
+    })
+
+    filteredFolders = Array(Set(filteredSites!.map { return $0.folder} ))
+    
+    self.filteredSites.removeAll()
+
+    filteredSites?.forEach {
+      if self.filteredSites[$0.folder] == nil {
+        self.filteredSites[$0.folder] = []
+      }
+      self.filteredSites[$0.folder]!.append($0)
+      self.filteredSites[$0.folder]![self.filteredSites[$0.folder]!.count - 1].image = self.createPreviewImage(from: $0.name)
+    }
+    
+    tableView.reloadData()
+  }
+  
   fileprivate func setObservers() {
     dataManager.fetchSites(of: dataManager.user!) { (sites) in
       guard let sites = sites else { return }
+      
       self.dataManager.user.sites = sites.reversed()
       
       self.folders = Array(Set(self.dataManager.user.sites!.map({ return $0.folder })))
@@ -49,21 +113,16 @@ class HomeViewController: UIViewController {
         self.foldersSites[key] = []
       }
       
-      self.imagesSite.forEach({ (key: String, _) in
-        self.imagesSite[key] = []
-      })
       
       self.dataManager.user.sites?.forEach({
         if self.foldersSites[$0.folder] == nil {
           self.foldersSites[$0.folder] = []
         }
-        if self.imagesSite[$0.folder] == nil {
-          self.imagesSite[$0.folder] = []
-        }
+        
         self.foldersSites[$0.folder]!.append($0)
-        self.imagesSite[$0.folder]!.append(self.createPreviewImage(from: $0.name))
+        self.foldersSites[$0.folder]![self.foldersSites[$0.folder]!.count - 1].image = self.createPreviewImage(from: $0.name)
       })
-      
+
       DispatchQueue.main.async {
         self.tableView.reloadData()
       }
@@ -123,11 +182,12 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
-    return folders.count
+    return isFiltering() ? filteredFolders.count : folders.count
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    guard let folder = foldersSites[folders[section]] else { return 0 }
+
+    guard let folder = isFiltering() ? filteredSites[filteredFolders[section]] : foldersSites[folders[section]] else { return 0 }
     return (!folder.isEmpty) ? folder.count : 0
   }
   
@@ -148,16 +208,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     let cell = tableView.dequeueReusableCell(withIdentifier: "siteCell") as! SiteViewCell
     let index = indexPath.row
     
-    let foldersGrouped = foldersSites[folders[indexPath.section]]
+    let foldersGrouped = (!isFiltering()) ? foldersSites[folders[indexPath.section]] : filteredSites[filteredFolders[indexPath.section]]
     guard let site = foldersGrouped?[index] else { return cell }
-    let images = imagesSite[folders[indexPath.section]]
-    
+
     cell.delegate = self
     
     cell.nameLabel.text = site.name
     cell.emailLabel.text = site.email
     cell.copyButton.isHidden = (site.password == nil)
-    cell.previewImageView.image = images?[indexPath.row]
+    cell.previewImageView.image = site.image
     
     return cell
   }
@@ -167,14 +226,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return folders[section]
+    return isFiltering() ? filteredFolders[section] : folders[section]
   }
   
   func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
   {
     let header = view as! UITableViewHeaderFooterView
     header.textLabel?.font = UIFont.systemFont(ofSize: 18)
-    header.textLabel?.text = folders[section]
+    header.textLabel?.text = isFiltering() ? filteredFolders[section] : folders[section]
   }
 
   func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -192,6 +251,11 @@ extension HomeViewController: SiteViewCellDelegate {
     self.copyInClipboard(text: password)
     self.showPopup(message: NSLocalizedString("Password copied in clipboard\n\n", comment: "passwordInClipboard") + password, distanceFromBottom: 125.0)
   }
-  
-  
+}
+
+/// - MARK: SearchBarResultsUpdating
+extension HomeViewController: UISearchResultsUpdating {
+  func updateSearchResults(for searchController: UISearchController) {
+    filterContentForSearchText(searchController.searchBar.text!)
+  }
 }
